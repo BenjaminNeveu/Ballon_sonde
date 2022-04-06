@@ -28,7 +28,7 @@ void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
 
     Serial.printf("altitude : %d\n", altitude);
 
-    latitude = arrondi(latitude);
+    latitude = arrondir(latitude);
     Serial.printf("latitude : %d\n", (int) latitude);
 
     if (longitude >= 0) {
@@ -38,17 +38,17 @@ void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
         bitSigneLongitude = 1;
     }
 
-    longitude = arrondi(longitude);
+    longitude = arrondir(longitude);
     Serial.printf("bit de signe : %d\n", bitSigneLongitude);
     Serial.printf("longitude : %d\n", (int) longitude);
 
-    radiations = arrondi(radiations);
+    radiations = arrondir(radiations);
     Serial.printf("radiation : %d\n", (int) radiations);
 
-    pression = arrondi(pression);
+    pression = arrondir(pression);
     Serial.printf("pression : %d\n", (int) pression);
 
-    humidite = arrondi(humidite);
+    humidite = arrondir(humidite);
     Serial.printf("humidite : %d\n", (int) humidite);
 
     if (temperature >= 0) {
@@ -58,7 +58,7 @@ void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
         bitSigneTemperature = 1;
     }
 
-    temperature = arrondi(temperature);
+    temperature = arrondir(temperature);
     Serial.printf("bit de signe : %d\n", bitSigneTemperature);
     Serial.printf("temperature : %d\n", (int) temperature);
 
