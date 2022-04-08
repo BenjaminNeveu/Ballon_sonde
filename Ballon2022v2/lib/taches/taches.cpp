@@ -166,7 +166,7 @@ void Taches::tacheServeurWeb(void* parameter) {
         request->send(SPIFFS, "/jquery-3.6.0.min.js", "text/javascript");
     });
 
-    server.on("/recupererDonnee", HTTP_POST, [lesDonnees](AsyncWebServerRequest * request) {
+    server.on("/recupererDonnee", HTTP_GET, [lesDonnees](AsyncWebServerRequest * request) {
 
         xSemaphoreTake(mutex, portMAX_DELAY);
 
