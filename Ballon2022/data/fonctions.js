@@ -17,6 +17,31 @@ function envoiTrame() {
     });
 }
 
+function desactiver() {
+
+    let message = "Êtes-vous sûr ?";
+
+    if (confirm(message) === true) {
+        $.ajax({
+            url: "/desactiverWifi",
+            type: 'GET',
+            success:
+                    function (donnees, status, xhr)
+                    {
+                        console.log(donnees);
+                    },
+            error:
+                    function (xhr, status, error)
+                    {
+                        console.log("param : " + JSON.stringify(xhr));
+                        console.log("status : " + status);
+                        console.log("error : " + error);
+                    }
+        });
+    } 
+}
+
+
 function recupererDonnee() {
     $.getJSON("/recupererDonnee")
             .done(function (resultat, status, xhr) {

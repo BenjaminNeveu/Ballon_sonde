@@ -36,7 +36,7 @@ void setup() {
             "tacheBME280", /* name of task. */
             10000, /* Stack size of task */
             &lesDonnees, /* parameter of the task */
-            1, /* priority of the task */
+            2, /* priority of the task */
             NULL); /* Task handle to keep track of created task */
 
     xTaskCreate(

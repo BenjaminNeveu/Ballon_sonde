@@ -49,23 +49,41 @@ void Taches::tacheSigfox(void* parameter) {
     xLastWakeTime = xTaskGetTickCount();
     typeDonnees *lesDonnees = (typeDonnees *) parameter;
 
+    float altPrecedent;
+    float altActuel;
+    int ticks;
+
     Sig = new SigfoxBallon(27, 26, true);
     Sig->begin();
 
     while (true) {
+        
+        Serial.print("TacheSigfox \n");
         xSemaphoreTake(mutex, portMAX_DELAY);
         if (lesDonnees->latitude != 40.0) {
+            altPrecedent = altActuel;
+            altActuel = lesDonnees->altitude;
             Sig->coderTrame(lesDonnees);
             Sig->envoyer();
         }
         xSemaphoreGive(mutex);
-        //if (lesDonnees->altitude > 1020) {
-        vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(600000));
-        //  Serial.println("10 min");
-        //} else {
-        //    vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(240000));
-        //     Serial.println("4 min");
-        //}
+        
+        if (SERIAL == true){
+            Serial.print("altitude précédente : ");
+            Serial.print(altPrecedent);
+            Serial.print("altitude actuel : ");
+            Serial.print(altActuel);
+        }
+        
+        if ((altActuel > 1020) && (altActuel > altPrecedent)) {
+            ticks = 600000;
+            Serial.println("10 min\t");
+        } else {
+            ticks = 300000;
+            Serial.println("5 min\t");
+        }
+        
+        vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(ticks));
     }
 }
 
@@ -74,17 +92,22 @@ void Taches::tacheCarteSd(void* parameter) {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
     typeDonnees *lesDonnees = (typeDonnees *) parameter;
-
+    
     CarteSD.begin();
-    CarteSD.initFile("/ballon.csv", "datetime;altitude;longitude;latitude;radiation;pression;temperature;humidite\n");
-
+    
+    if(SD.exists("/ballon.csv")){
+        Serial.println("fichier existe");
+    }else{
+        CarteSD.initFile("/ballon.csv", "datetime;altitude;longitude;latitude;radiation;pression;temperature;humidite\n");
+        Serial.println("fichier cree");
+    }
+    
     while (true) {
         Serial.print("TacheCarteSD\n");
         xSemaphoreTake(mutex, portMAX_DELAY);
-        CarteSD.creerChaine(lesDonnees);
+        CarteSD.ajouter("/ballon.csv", CarteSD.creerChaine(lesDonnees));
         xSemaphoreGive(mutex);
-        CarteSD.ajouter("/ballon.csv", CarteSD.chaine);
-
+        
         vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(60000));
     }
 }
@@ -92,7 +115,7 @@ void Taches::tacheCarteSd(void* parameter) {
 void Taches::tacheBME280(void* parameter) {
 
     while (!bme.begin()) {
-        Serial.println("erreur");
+        Serial.println("erreur BME");
         delay(1000);
     }
 
@@ -198,18 +221,22 @@ void Taches::tacheServeurWeb(void* parameter) {
 
     });
 
+    server.on("/desactiverWifi", HTTP_GET, [](AsyncWebServerRequest * request) {
+
+        Serial.println("WiFi off");
+        request->send(200, "text/plain", "WiFi off");
+        WiFi.disconnect();
+        WiFi.mode(WIFI_OFF);
+        WiFi.getSleep();
+        server.end();
+        Serial.println("WiFi erreur");
+        request->send(200, "text/plain", "WiFi erreur");
+
+    });
+
     server.begin();
 
     while (true) {
-        /*
-        if( lesDonnees->temperature > 28 ){
-            server.end();
-            WiFi.setSleep(true);
-        }else{
-            
-        }
-        */
-        
         vTaskDelay(1); //indispensable car sinon guru ?!
         delay(100);
     }
@@ -294,7 +321,7 @@ void Taches::tacheRadiation(void* parameter) {
     xLastWakeTime = xTaskGetTickCount();
     typeDonnees *donneesRadiation = (typeDonnees *) parameter;
     radiationWatch.setup();
-    // Register the callbacks.
+    //Register the callbacks.
     //radiationWatch.registerRadiationCallback(&onRadiation);
     //radiationWatch.registerNoiseCallback(&onNoise);
 

@@ -27,10 +27,10 @@ void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
     float temperature = lesDonnees->temperature * 10;
 
     altitude = arrondi(altitude);
-    Serial.printf("altitude : %d\n", (int)altitude);
+    //Serial.printf("altitude : %d\n", (int)altitude);
 
     latitude = arrondi(latitude);
-    Serial.printf("latitude : %d\n", (int) latitude);
+    //Serial.printf("latitude : %d\n", (int) latitude);
 
     if (longitude >= 0) {
         bitSigneLongitude = 0;
@@ -40,17 +40,17 @@ void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
     }
 
     longitude = arrondi(longitude);
-    Serial.printf("bit de signe : %d\n", bitSigneLongitude);
-    Serial.printf("longitude : %d\n", (int) longitude);
+    //Serial.printf("bit de signe : %d\n", bitSigneLongitude);
+    //Serial.printf("longitude : %d\n", (int) longitude);
 
     radiations = arrondi(radiations);
-    Serial.printf("radiation : %d\n", (int) radiations);
+    //Serial.printf("radiation : %d\n", (int) radiations);
 
     pression = arrondi(pression);
-    Serial.printf("pression : %d\n", (int) pression);
+    //Serial.printf("pression : %d\n", (int) pression);
 
     humidite = arrondi(humidite);
-    Serial.printf("humidite : %d\n", (int) humidite);
+    //Serial.printf("humidite : %d\n", (int) humidite);
 
     if (temperature >= 0) {
         bitSigneTemperature = 0;
@@ -60,10 +60,10 @@ void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
     }
 
     temperature = arrondi(temperature);
-    Serial.printf("bit de signe : %d\n", bitSigneTemperature);
-    printf("temperature : %d\n", (int) temperature);
+    //Serial.printf("bit de signe : %d\n", bitSigneTemperature);
+    //Serial.printf("temperature : %d\n", (int) temperature);
 
-    Serial.printf("\n");
+    //Serial.printf("\n");
 
     //----------------formater-trame--------------------
 
@@ -154,7 +154,7 @@ void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
     trame[i] = octet;
     i--;
     
-    Serial.println("Trame codée");
+    Serial.print("Trame codée\t");
 }
 
 float SigfoxBallon::arrondi(float val) {

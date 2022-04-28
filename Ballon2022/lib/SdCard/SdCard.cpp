@@ -25,7 +25,7 @@ bool SdCard::begin() {
     if (SDFileSystem.begin(cs)) {
         Serial.println("Initialisation succes.");
         retour = true;
-    } else {   
+    } else {
         Serial.println("Initialisation failed.");
         retour = false;
     }
@@ -34,62 +34,65 @@ bool SdCard::begin() {
 
 void SdCard::initFile(const char* path, const char* message) {
     File file = SDFileSystem.open(path, FILE_WRITE);
-    
+
     if (!file) {
-        Serial.println("Erreur ecriture du fichier");
+        Serial.print("Erreur ecriture du fichier / ");
         return;
-    }else{
-        Serial.println("Succes ecriture du fichier");
+    } else {
+        Serial.print("Succes ecriture du fichier / ");
     }
-    
+
     if (!file.print(message)) {
         Serial.println("Erreur ecriture de la premiere ligne");
-    }else{
+    } else {
         Serial.println("Succes ecriture de la premiere ligne");
     }
     file.close();
 }
 
-
 void SdCard::ajouter(const char* path, String chaine) {
     File file = SDFileSystem.open(path, FILE_APPEND);
-    
+
     if (!file) {
         Serial.print("Erreur ouvertuverture fichier / ");
         return;
-    }else{
+    } else {
         Serial.print("Fichier ouvert avec succes / ");
     }
     if (!file.println(chaine)) {
         Serial.println("Chaine pas ajoute avec succes");
-    }else{
+    } else {
         Serial.println("Chaine ajoute avec succes");
     }
     file.close();
 }
 
-void SdCard::creerChaine(typeDonnees* lesDonnees) {
+String SdCard::creerChaine(typeDonnees* lesDonnees) {
+    String chaine;
+    
     chaine = String(lesDonnees->annee) + "-";
     chaine += formatDateHeure(lesDonnees->mois) + "-";
     chaine += formatDateHeure(lesDonnees->jour) + " ";
     chaine += formatDateHeure(lesDonnees->heure) + ":";
     chaine += formatDateHeure(lesDonnees->minute) + ":";
     chaine += formatDateHeure(lesDonnees->seconde) + ";";
-    chaine += String(lesDonnees->altitude,2) + ";";
-    chaine += String(lesDonnees->latitude,8) + ";";
-    chaine += String(lesDonnees->longitude,8) + ";";
-    chaine += String(lesDonnees->cpm,2) + ";";
-    chaine += String(lesDonnees->pression,2) + ";";
-    chaine += String(lesDonnees->temperature,2) + ";";
-    chaine += String(lesDonnees->humidite,2);
-} 
+    chaine += String(lesDonnees->altitude, 2) + ";";
+    chaine += String(lesDonnees->latitude, 8) + ";";
+    chaine += String(lesDonnees->longitude, 8) + ";";
+    chaine += String(lesDonnees->cpm, 2) + ";";
+    chaine += String(lesDonnees->pression, 2) + ";";
+    chaine += String(lesDonnees->temperature, 2) + ";";
+    chaine += String(lesDonnees->humidite, 2);
+    
+    return chaine;
+}
 
 String SdCard::formatDateHeure(byte val) {
     String dateHeure;
-    if ( val < 10 ){
+    if (val < 10) {
         dateHeure = "0" + String(val);
-    }else{
-        dateHeure = String (val); 
+    } else {
+        dateHeure = String(val);
     }
     return dateHeure;
 }

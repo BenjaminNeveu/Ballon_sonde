@@ -24,17 +24,17 @@ public:
     
     void initFile(const char* path, const char* message);
     
-    void creerChaine (typeDonnees *lesDonnees);
+    String creerChaine (typeDonnees *lesDonnees);
     
     void ajouter(const char* path, String chaine);
-    
-    String chaine;
     
 private:
     
     String formatDateHeure(byte val);
     
     uint8_t cs;
+    
+
 };
 
 #endif /* SDCARD_H */
