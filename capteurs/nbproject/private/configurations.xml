@@ -5,12 +5,26 @@
       <df name="include">
       </df>
       <df name="lib">
+        <df name="bme280">
+          <in>BME280.cpp</in>
+          <in>BME280.h</in>
+          <in>BME280I2C.cpp</in>
+          <in>BME280I2C.h</in>
+        </df>
+        <df name="radiationwatch">
+          <in>RadiationWatch.cpp</in>
+          <in>RadiationWatch.h</in>
+        </df>
         <df name="Structure">
           <in>Structure.h</in>
         </df>
         <df name="Taches">
           <in>Taches.cpp</in>
           <in>Taches.h</in>
+        </df>
+        <df name="tinygps">
+          <in>TinyGPS.cpp</in>
+          <in>TinyGPS.h</in>
         </df>
       </df>
       <df name="src">

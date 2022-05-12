@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /* 
  * File:   Taches.h
  * Author: cmaillard
- *
+ * 
  * Created on 30 mars 2022, 10:19
  */
 
@@ -36,6 +30,7 @@ public:
     static void TacheBME(void *Parameters);
     static void TacheRadiation(void *Parameters);
     static void TacheGPS(void *Parameters);
+    static void TacheAfficher(void* Parameters);
 
 private:
 
