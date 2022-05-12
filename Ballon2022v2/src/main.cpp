@@ -53,7 +53,7 @@ void setup() {
             "tacheBME280",
             10000, 
             &lesDonnees, 
-            2,
+            1,
             NULL);
 
     xTaskCreate(
@@ -85,7 +85,7 @@ void setup() {
             "tacheSigfox",
             10000,
             &lesDonnees,
-            1,
+            2,
             NULL);
     
     xTaskCreate(
