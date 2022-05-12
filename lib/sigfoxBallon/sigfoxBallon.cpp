@@ -1,3 +1,12 @@
+/**
+ * @file sigfoxBallon.cpp
+ * @briel Implémentation de la classe SigfoxBallon
+ * @version 1.0
+ * @author Benjamin NEVEU
+ * @date 18/03/2022
+ * @details Classe de la trame SigFox 
+ */
+
 /* 
  * File:   sigfoxBallon.cpp
  * Author: bneveu
@@ -7,62 +16,63 @@
 
 #include "sigfoxBallon.h"
 
-SigfoxBallon::SigfoxBallon(uint8_t rxPin, uint8_t txPin, bool debugEn):
-    Sigfox(rxPin, txPin, debugEn)
-{
+/**
+ * @brief SigfoxBallon::SigfoxBallon
+ * @param rxPin broche rx de l'ESP32
+ * @param txPin broche tx de l'ESP32
+ * @param debugEn mode debug
+ */
+SigfoxBallon::SigfoxBallon(uint8_t rxPin, uint8_t txPin, bool debugEn) :
+Sigfox(rxPin, txPin, debugEn) {
 
 }
-
+/**
+ * @brief SigfoxBallon::coderTrame
+ * @param lesDonnees donnée dans la trame
+ */
 void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
-
     int bitSigneLongitude;
     int bitSigneTemperature;
+    // recupération des valeur de la structure avec décalage de la virgule
+    float altitude = lesDonnees->altitude;
+    double latitude = (lesDonnees->latitude - 40)*100000;
+    double longitude = lesDonnees->longitude * 100000;
+    float radiations = lesDonnees->cpm;
+    float pression = lesDonnees->pression;
+    float humidite = lesDonnees->humidite;
+    float temperature = lesDonnees->temperature;
+    // recuperation des bit de signe
+    bitSigneLongitude = bitSigne(longitude);
+    bitSigneTemperature = bitSigne(temperature);
+    // verification de la valeur si elle se situe entre valMin et valMax
+    altitude = verifValeur(altitude, 0, 32767);
+    latitude = verifValeur(latitude, 4000000, 2097151);
+    longitude = verifValeur(longitude, -1048575, 1048575);
+    radiations = verifValeur(radiations, 0, 32767);
+    pression = verifValeur(pression, 0, 1023);
+    humidite = verifValeur(humidite, 0, 100);
+    temperature = verifValeur(temperature, -63, 63);
+    // arrondir les valeur
+    altitude = arrondi(altitude);
+    latitude = arrondi(latitude);
+    longitude = arrondi(longitude);
+    radiations = arrondi(radiations);
+    pression = arrondi(pression);
+    humidite = arrondi(humidite);
+    temperature = arrondi(temperature);
 
-    int altitude = lesDonnees->altitude;
-    double latitude = (lesDonnees->latitude - 40)*1000000;
-    double longitude = lesDonnees->longitude * 1000000;
-    float radiations = lesDonnees->cpm * 10;
-    float pression = lesDonnees->pression * 10;
-    float humidite = lesDonnees->humidite * 10;
-    float temperature = lesDonnees->temperature * 10;
-
-    Serial.printf("altitude : %d\n", altitude);
-
-    latitude = arrondir(latitude);
-    Serial.printf("latitude : %d\n", (int) latitude);
-
-    if (longitude >= 0) {
-        bitSigneLongitude = 0;
-    } else {
-        longitude = longitude * -1;
-        bitSigneLongitude = 1;
+    if (debug == true) {
+        Serial.printf("altitude : %d\n", (int) altitude);
+        Serial.printf("latitude : %d\n", (int) latitude);
+        Serial.printf("bit de signe : %d\n", bitSigneLongitude);
+        Serial.printf("longitude : %d\n", (int) longitude);
+        Serial.printf("radiation : %d\n", (int) radiations);
+        Serial.printf("pression : %d\n", (int) pression);
+        Serial.printf("humidite : %d\n", (int) humidite);
+        Serial.printf("bit de signe : %d\n", bitSigneTemperature);
+        Serial.printf("temperature : %d\n", (int) temperature);
+        Serial.printf("\n");
     }
-
-    longitude = arrondir(longitude);
-    Serial.printf("bit de signe : %d\n", bitSigneLongitude);
-    Serial.printf("longitude : %d\n", (int) longitude);
-
-    radiations = arrondir(radiations);
-    Serial.printf("radiation : %d\n", (int) radiations);
-
-    pression = arrondir(pression);
-    Serial.printf("pression : %d\n", (int) pression);
-
-    humidite = arrondir(humidite);
-    Serial.printf("humidite : %d\n", (int) humidite);
-
-    if (temperature >= 0) {
-        bitSigneTemperature = 0;
-    } else {
-        temperature = temperature * -1;
-        bitSigneTemperature = 1;
-    }
-
-    temperature = arrondir(temperature);
-    Serial.printf("bit de signe : %d\n", bitSigneTemperature);
-    Serial.printf("temperature : %d\n", (int) temperature);
-
-    Serial.printf("\n");
 
     //----------------formater-trame--------------------
 
@@ -72,7 +82,7 @@ void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
     int i = 11; //indice du tableau (on commence à la fin du tableau)
 
     //trame[11]
-    coteDroit = temperature;
+    coteDroit = (int) temperature;
     coteGauche = (int) humidite << 7;
     octet = coteDroit | coteGauche;
 
@@ -143,21 +153,36 @@ void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
 
     //trame[1]
     coteDroit = (int) latitude >> 20;
-    coteGauche = altitude << 1;
+    coteGauche = (int) altitude << 1;
     octet = coteDroit | coteGauche;
     trame[i] = octet;
     i--;
 
     //trame[0]
-    octet = altitude >> 7;
+    octet = (int) altitude >> 7;
     trame[i] = octet;
     i--;
+
+    if (debug == true) {
+        for (i = 0; i < 12; i++) {
+            Serial.print(trame[i] < 16 ? "0" : "");
+            Serial.print(trame[i], HEX);
+        }
+        Serial.print("\n");
+        Serial.print("Trame codée\t");
+    }
 }
 
-float SigfoxBallon::arrondir(float val) {
+/**
+ * 
+ * @param val
+ * @return 
+ */
+float SigfoxBallon::arrondi(float val) {
     int digit;
+    val = val * 10; 
     // recuperer le dernier digit
-    digit = (int)val % 10;
+    digit = (int) val % 10;
     if (digit >= 5) {
         //Si digit >= 5, val+1
         val = val / 10 + 1;
@@ -168,10 +193,16 @@ float SigfoxBallon::arrondir(float val) {
     return val;
 }
 
-double SigfoxBallon::arrondir(double val) {
+/**
+ * 
+ * @param val
+ * @return 
+ */
+double SigfoxBallon::arrondi(double val) {
     int digit;
+    val = val * 10; 
     // recuperer le dernier digit
-    digit =(int)val % 10;
+    digit = (int) val % 10;
     if (digit >= 5) {
         //Si digit >= 5, val+1
         val = val / 10 + 1;
@@ -180,4 +211,72 @@ double SigfoxBallon::arrondir(double val) {
         val = val / 10;
     }
     return val;
+}
+
+/**
+ * 
+ * @param val
+ * @param valMin
+ * @param valMax
+ * @return 
+ */
+float SigfoxBallon::verifValeur(float val, float valMin, float valMax) {
+    if(val > valMax){
+        val = valMax;
+    }
+    if(val < valMin){
+        val = valMin;
+    }
+    return val;
+}
+
+/**
+ * 
+ * @param val
+ * @param valMin
+ * @param valMax
+ * @return 
+ */
+double SigfoxBallon::verifValeur(double val, double valMin, double valMax) {
+    if(val > valMax){
+        val = valMax;
+    }
+    if(val < valMin){
+        if (val < 0){
+            val = valMin * -1;   
+        }else{
+            val = valMin;
+        }
+    }
+    return val;
+}
+
+/**
+ * 
+ * @param val
+ * @return 
+ */
+int SigfoxBallon::bitSigne(float val) {
+    int bitSigne;
+    if (val >= 0) {
+        bitSigne = 0;
+    } else {
+        bitSigne = 1;
+    }
+    return bitSigne;
+}
+
+/**
+ * 
+ * @param val
+ * @return 
+ */
+int SigfoxBallon::bitSigne(double val) {
+    int bitSigne;
+    if (val >= 0) {
+        bitSigne = 0;
+    } else {
+        bitSigne = 1;
+    }
+    return bitSigne;
 }

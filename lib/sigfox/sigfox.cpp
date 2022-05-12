@@ -4,7 +4,7 @@
 uint8_t msg[12];
 
 Sigfox::Sigfox(uint8_t rxPin = 26, uint8_t txPin = 27, bool debugEn = true) {
-    serialSig = new HardwareSerial(2);
+    serialSig = new HardwareSerial(1);
     rx = rxPin;
     tx = txPin;
     debug = debugEn;
@@ -38,7 +38,7 @@ void Sigfox::begin() {
 
     if (debug) {
         delay(100);
-        tester();
+        //tester();
         delay(100);
         obtenirID();
         delay(100);
@@ -144,6 +144,30 @@ bool Sigfox::envoyer(const void* data, uint8_t size) {
     if (debug) {
         Serial.print("Status : ");
         Serial.println(res);
+        return false; 
     }
-    return false;
+    
+}
+
+
+bool Sigfox::envoyer() {
+
+    serialSig->print("AT$SF=");
+    if (debug) {
+        Serial.print("Byte : ");
+    }
+    for (uint8_t i = 0; i < sizeof(trame); ++i) {
+        serialSig->print(trame[i] < 16 ? "0" : "");
+        serialSig->print(trame[i], HEX);
+
+        if (debug) {
+            Serial.print(trame[i] < 16 ? "0" : "");
+            Serial.print(trame[i], HEX);
+        }
+    }
+    if (debug) {
+        Serial.println(" ");
+    }
+    serialSig->print("\r");
+    return true;
 }

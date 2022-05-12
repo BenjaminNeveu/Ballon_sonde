@@ -15,7 +15,7 @@
 
 class SdCard {
 public:
-    SdCard(uint8_t sckPin = 14, uint8_t misoPin = 2, uint8_t mosiPin = 15, uint8_t csPin = 13);
+    SdCard(uint8_t sckPin = 14, uint8_t misoPin = 2, uint8_t mosiPin = 15, uint8_t csPin = 13, bool debug = true);
 
     SdCard(const SdCard& orig);
     virtual ~SdCard();
@@ -24,16 +24,14 @@ public:
     
     void initFile(const char* path, const char* message);
     
-    void creerChaine (typeDonnees *lesDonnees);
+    String creerChaine (typeDonnees *lesDonnees);
     
     void ajouter(const char* path, String chaine);
-    
-    String chaine;
     
 private:
     
     String formatDateHeure(byte val);
-    
+    bool debug;
     uint8_t cs;
 };
 

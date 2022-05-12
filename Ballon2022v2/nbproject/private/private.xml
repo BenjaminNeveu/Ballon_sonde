@@ -8,8 +8,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/USERS/ELEVES/SNIR2020/bneveu/Bureau/Programme/Ballon2022v2/src/main.cpp</file>
-            <file>file:/home/USERS/ELEVES/SNIR2020/bneveu/Bureau/Programme/Ballon2022v2/lib/sigfoxBallon/sigfoxBallon.cpp</file>
             <file>file:/home/USERS/ELEVES/SNIR2020/bneveu/Bureau/Programme/Ballon2022v2/lib/sigfoxBallon/sigfoxBallon.h</file>
+            <file>file:/home/USERS/ELEVES/SNIR2020/bneveu/Bureau/Programme/Ballon2022v2/lib/sigfoxBallon/sigfoxBallon.cpp</file>
+            <file>file:/home/USERS/ELEVES/SNIR2020/bneveu/Bureau/Programme/Ballon2022v2/lib/sigfox/sigfox.cpp</file>
             <file>file:/home/USERS/ELEVES/SNIR2020/bneveu/Bureau/Programme/Ballon2022v2/lib/SdCard/SdCard.h</file>
             <file>file:/home/USERS/ELEVES/SNIR2020/bneveu/Bureau/Programme/Ballon2022v2/lib/sigfox/sigfox.h</file>
             <file>file:/home/USERS/ELEVES/SNIR2020/bneveu/Bureau/Programme/Ballon2022v2/lib/taches/taches.cpp</file>

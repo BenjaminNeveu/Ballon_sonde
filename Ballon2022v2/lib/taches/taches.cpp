@@ -5,7 +5,7 @@
  * Created on 31 mars 2022, 10:44
  */
 
-#define DEBUG true
+#define DEBUG false
 
 // temps pour tacheCarteSD
 #define TIME_CARTESD 30000
@@ -15,6 +15,8 @@
 #define TIME_GPS 30000
 // temps pour tacheRadiation
 #define TIME_RADIATION 30000
+// temps pour tacheAfficher
+#define TIME_AFFICHER 30000
 
 // temps pour tacheSigfox selon l'altitude
 // avant décolage
@@ -28,20 +30,11 @@
 
 #include "taches.h"
 
+// nom du point d'accès
 const char *ssid = "Ballon_Sonde";
+// mot de passe du point d'accès
+// NULL = aucun mot de passe
 const char *password = NULL;
-
-BME280I2C::Settings setBme(
-        BME280::OSR_X1,
-        BME280::OSR_X1,
-        BME280::OSR_X1,
-        BME280::Mode_Forced,
-        BME280::StandbyTime_1000ms,
-        BME280::Filter_Off,
-        BME280::SpiEnable_False,
-        BME280I2C::I2CAddr_0x77 // I2C address pour BME 280.
-        );
-BME280I2C bme(setBme);
 
 SigfoxBallon *Sig;
 SdCard CarteSD(14, 2, 15, 13, DEBUG);
@@ -82,7 +75,6 @@ void Taches::tacheSigfox(void* parameter) {
         if (DEBUG == true) {
             Serial.print("TacheSigfox \n");
         }
-
         xSemaphoreTake(mutex, portMAX_DELAY);
         //latitude 40.0 valeur du GPS non sync
         //Si le GPS n'est pas sync aucune trame est envoyé
@@ -94,9 +86,8 @@ void Taches::tacheSigfox(void* parameter) {
         }
         xSemaphoreGive(mutex);
 
-        vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(TIME_SIG_VOL));
-        
-        /*
+        //vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(TIME_SIG_VOL));
+
         if (DEBUG == true) {
             Serial.print("altitude précédente : ");
             Serial.print(altPrecedent);
@@ -104,6 +95,7 @@ void Taches::tacheSigfox(void* parameter) {
             Serial.print(altActuel);
         }
 
+        // si l'altitude passe au dessu de 200 m 
         if (altActuel >= 200) {
             depart = false;
         }
@@ -135,7 +127,7 @@ void Taches::tacheSigfox(void* parameter) {
             }
         }
         vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(ticks));
-        */
+
     }
 }
 
@@ -148,6 +140,8 @@ void Taches::tacheCarteSd(void* parameter) {
     CarteSD.begin();
 
     if (DEBUG == true) {
+        // vérification si le fichier csv est déjà pésent
+        // crétion du fichier si n'est pas présent
         if (SD.exists("/ballon.csv")) {
             Serial.println("fichier existe");
         } else {
@@ -155,6 +149,8 @@ void Taches::tacheCarteSd(void* parameter) {
             Serial.println("fichier cree");
         }
     } else {
+        // vérification si le fichier csv n'est pas déjà pésent
+        // crétion du fichier
         if (!SD.exists("/ballon.csv")) {
             CarteSD.initFile("/ballon.csv", "datetime;altitude;longitude;latitude;radiation;pression;temperature;humidite\n");
         }
@@ -166,6 +162,7 @@ void Taches::tacheCarteSd(void* parameter) {
             Serial.print("TacheCarteSD\n");
         }
         xSemaphoreTake(mutex, portMAX_DELAY);
+        // ajout de la chaine de caractere contenant les données, au fichier csv
         CarteSD.ajouter("/ballon.csv", CarteSD.creerChaine(lesDonnees));
         xSemaphoreGive(mutex);
 
@@ -175,7 +172,17 @@ void Taches::tacheCarteSd(void* parameter) {
 
 void Taches::tacheBME280(void* parameter) {
 
-
+    BME280I2C::Settings setBme(
+            BME280::OSR_X1,
+            BME280::OSR_X1,
+            BME280::OSR_X1,
+            BME280::Mode_Forced,
+            BME280::StandbyTime_1000ms,
+            BME280::Filter_Off,
+            BME280::SpiEnable_False,
+            BME280I2C::I2CAddr_0x77 // I2C address pour BME 280.
+            );
+    BME280I2C bme(setBme);
 
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
@@ -390,21 +397,63 @@ void Taches::tacheGPS(void* parameter) {
 void Taches::tacheRadiation(void* parameter) {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
-    typeDonnees *donneesRadiation = (typeDonnees *) parameter;
+    typeDonnees *lesDonnees = (typeDonnees *) parameter;
     radiationWatch.setup();
 
     while (true) {
         radiationWatch.loop();
         //ouverture du mutex
         xSemaphoreTake(mutex, portMAX_DELAY);
-        donneesRadiation->cpm = radiationWatch.cpm();
+        lesDonnees->cpm = radiationWatch.cpm();
         if (DEBUG == true) {
             Serial.print("TacheRadiation\ncpm: ");
-            Serial.println(donneesRadiation->cpm);
+            Serial.println(lesDonnees->cpm);
         }
         //fermeture du mutex
         xSemaphoreGive(mutex);
 
         vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(TIME_RADIATION));
+    }
+}
+
+void Taches::tacheAfficher(void* parameter) {
+    TickType_t xLastWakeTime;
+    xLastWakeTime = xTaskGetTickCount();
+    typeDonnees *lesDonnees = (typeDonnees *) parameter;
+
+    while (true) {
+        //ouverture du mutex
+        xSemaphoreTake(mutex, portMAX_DELAY);
+
+        Serial.print("\n\ntemperature :");
+        Serial.print(lesDonnees->temperature);
+        Serial.print("\t\thumidité :");
+        Serial.print(lesDonnees->humidite);
+        Serial.print("\t\tpression :");
+        Serial.print(lesDonnees->pression);
+        Serial.print("\naltitude : ");
+        Serial.print(lesDonnees->altitude);
+        Serial.print("\t\tlongitude :");
+        Serial.print(lesDonnees->longitude);
+        Serial.print("\t\tlatitude :");
+        Serial.print(lesDonnees->latitude);
+        Serial.print("\nannee :");
+        Serial.print(lesDonnees->annee);
+        Serial.print("\t\tmois :");
+        Serial.print(lesDonnees->mois);
+        Serial.print("\t\tjour :");
+        Serial.print(lesDonnees->jour);
+        Serial.print("\nheure :");
+        Serial.print(lesDonnees->heure);
+        Serial.print("\t\tminutes :");
+        Serial.print(lesDonnees->minute);
+        Serial.print("\t\tseconde :");
+        Serial.print(lesDonnees->seconde);
+        Serial.print("\nCPM :");
+        Serial.println(lesDonnees->cpm);
+        //fermeture du mutex
+        xSemaphoreGive(mutex);
+
+        vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(TIME_AFFICHER));
     }
 }

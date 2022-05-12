@@ -16,6 +16,8 @@
  * installation : pio lib -g install 1523
  * 
  * Bibliothèque : ESPAsyncWebServer @ 1.2.3
+ * Bibliothèque : ESPAsyncTCP @ 1.2.2
+ * Bibliothèque : AsyncTCP @ 1.1.1
  * installation : pio lib -g install 306
  * 
  * Bibliothèque : ArduinoJson @ 6.19.3
@@ -61,6 +63,7 @@ public:
     static void tacheRadiation (void *parameter);
     static void tacheGPS (void *parameter);
     static void tacheServeurWeb (void *parameter);
+    static void tacheAfficher(void *parameter);
     
 private:
     

@@ -16,6 +16,8 @@
  * installation : pio lib -g install 1523
  * 
  * Bibliothèque : ESPAsyncWebServer @ 1.2.3
+ * Bibliothèque : ESPAsyncTCP @ 1.2.2
+ * Bibliothèque : AsyncTCP @ 1.1.1
  * installation : pio lib -g install 306
  * 
  * Bibliothèque : ArduinoJson @ 6.19.3
@@ -91,6 +93,14 @@ void setup() {
     xTaskCreate(
             newTask->tacheServeurWeb,
             "tacheServeurWeb", 
+            10000, 
+            &lesDonnees, 
+            2, 
+            NULL);
+    
+    xTaskCreate(
+            newTask->tacheAfficher,
+            "tacheAfficher", 
             10000, 
             &lesDonnees, 
             2, 
