@@ -61,26 +61,17 @@ void Taches::tacheSigfox(void* parameter) {
         Serial.print("TacheSigfox \n");
         xSemaphoreTake(mutex, portMAX_DELAY);
         if (lesDonnees->latitude != 40.0) {
-            altPrecedent = altActuel;
-            altActuel = lesDonnees->altitude;
             Sig->coderTrame(lesDonnees);
             Sig->envoyer();
         }
         xSemaphoreGive(mutex);
         
-        if (SERIAL == true){
-            Serial.print("altitude précédente : ");
-            Serial.print(altPrecedent);
-            Serial.print("altitude actuel : ");
-            Serial.print(altActuel);
-        }
-        
-        if ((altActuel > 1020) && (altActuel > altPrecedent)) {
+        if (lesDonnees->altitude > 1020) {
             ticks = 600000;
-            Serial.println("10 min\t");
+            Serial.println("10 min");
         } else {
-            ticks = 300000;
-            Serial.println("5 min\t");
+            ticks = 240000;
+            Serial.println("4 min");
         }
         
         vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(ticks));

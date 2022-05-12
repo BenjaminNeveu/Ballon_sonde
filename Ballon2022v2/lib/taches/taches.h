@@ -5,6 +5,23 @@
  * Created on 31 mars 2022, 10:44
  */
 
+/*
+ * Bibliothèque : TinyGPS @ 0.0
+ * installation : pio lib -g install 416
+ * 
+ * Bibliothèque : BME280 @ 3.0.0
+ * installation : pio lib -g install 901
+ * 
+ * Bibliothèque : radiationwatch @ 0.6.4
+ * installation : pio lib -g install 1523
+ * 
+ * Bibliothèque : ESPAsyncWebServer @ 1.2.3
+ * installation : pio lib -g install 306
+ * 
+ * Bibliothèque : ArduinoJson @ 6.19.3
+ * installation : pio lib -g install 64
+ */
+
 #ifndef TACHES_H
 #define TACHES_H
 
