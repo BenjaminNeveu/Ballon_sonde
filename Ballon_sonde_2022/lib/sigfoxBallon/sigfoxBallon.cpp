@@ -46,7 +46,7 @@ void SigfoxBallon::coderTrame(typeDonnees *lesDonnees) {
     bitSigneTemperature = bitSigne(temperature);
     // verification de la valeur si elle se situe entre valMin et valMax
     altitude = verifValeur(altitude, 0, 32767);
-    latitude = verifValeur(latitude, 4000000, 2097151);
+    latitude = verifValeur(latitude, 0, 2097151);
     longitude = verifValeur(longitude, -1048575, 1048575);
     radiations = verifValeur(radiations, 0, 32767);
     pression = verifValeur(pression, 0, 1023);
