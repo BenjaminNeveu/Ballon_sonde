@@ -5,24 +5,14 @@ Le projet a été réalisé sur l'IDE Netbeans avec platformio d'installé
 <hr>
 
 Bibliothèque à installer :
-- TinyGPS
+- TinyGPS ``pio lib -g install 416``
 
-	``pio lib -g install 416``
+- BME280 ``pio lib -g install 901``
 
-- BME280
+- radiationwatch ``pio lib -g install 1523``
 
-	``pio lib -g install 901``
+- ESPAsyncWebServer / ESPAsyncTCP / AsyncTCP ``pio lib -g install 306``
 
-- radiationwatch
-
-	``pio lib -g install 1523``
-
-- ESPAsyncWebServer / ESPAsyncTCP / AsyncTCP
-
-    ``pio lib -g install 306``
-
-- ArduinoJson
-
-	``pio lib -g install 64``
+- ArduinoJson ``pio lib -g install 64``
 
 
