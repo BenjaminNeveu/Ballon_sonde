@@ -26,6 +26,7 @@ SigfoxBallon::SigfoxBallon(uint8_t rxPin, uint8_t txPin, bool debugEn) :
 Sigfox(rxPin, txPin, debugEn) {
 
 }
+
 /**
  * @brief SigfoxBallon::coderTrame
  * @param lesDonnees donnée dans la trame

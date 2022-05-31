@@ -5,28 +5,18 @@
  * Created on 31 mars 2022, 10:44
  */
 
-#define DEBUG false
+#define DEBUG true
 
 // temps pour tacheCarteSD
-#define TIME_CARTESD 30000
+#define TIME_CARTESD 60000
 // temps pour tacheBME280
-#define TIME_BME 30000
+#define TIME_BME 60000
 // temps pour tacheGPS
-#define TIME_GPS 30000
+#define TIME_GPS 995
 // temps pour tacheRadiation
-#define TIME_RADIATION 30000
+#define TIME_RADIATION 60000
 // temps pour tacheAfficher
-#define TIME_AFFICHER 30000
-
-// temps pour tacheSigfox selon l'altitude
-// avant décolage
-#define TIME_SIG_DEPART 600000
-// en dessous de 1200 m lors de la monter
-#define TIME_SIG_DEBUT 300000
-// au dessus de 1200 m
-#define TIME_SIG_VOL 600000
-// en dessous de 1200 m lors de la descente
-#define TIME_SIG_FIN 180000
+#define TIME_AFFICHER 60000
 
 #include "taches.h"
 
@@ -58,76 +48,25 @@ Taches::~Taches() {
 
 void Taches::tacheSigfox(void* parameter) {
 
-    TickType_t xLastWakeTime;
-    xLastWakeTime = xTaskGetTickCount();
     typeDonnees *lesDonnees = (typeDonnees *) parameter;
-
-    float altPrecedent = 0;
-    float altActuel = 0;
-    bool depart = true;
-    int ticks;
 
     Sig = new SigfoxBallon(27, 26, DEBUG);
     Sig->begin();
 
     while (true) {
 
-        if (DEBUG == true) {
-            Serial.print("TacheSigfox \n");
-        }
+        // Si le GPS n'est pas sync aucune trame est envoyé
+        // envoie toutes les 2 minutes à la seconde 37
+        // ouverture du mutex
         xSemaphoreTake(mutex, portMAX_DELAY);
-        //latitude 40.0 valeur du GPS non sync
-        //Si le GPS n'est pas sync aucune trame est envoyé
-        if (lesDonnees->latitude != 40.0) {
-            altPrecedent = altActuel;
-            altActuel = lesDonnees->altitude;
+        if ((lesDonnees->seconde == 37) && (lesDonnees->minute % 2 == 0)) {
             Sig->coderTrame(lesDonnees);
             Sig->envoyer();
+            delay(1000); 
         }
+        // fermeture du mutex
         xSemaphoreGive(mutex);
-
-        //vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(TIME_SIG_VOL));
-
-        if (DEBUG == true) {
-            Serial.print("altitude précédente : ");
-            Serial.print(altPrecedent);
-            Serial.print("\taltitude actuel : ");
-            Serial.print(altActuel);
-        }
-
-        // si l'altitude passe au dessu de 200 m 
-        if (altActuel >= 200) {
-            depart = false;
-        }
-        if (depart == true) {
-            // avant le depart 10 min
-            ticks = TIME_SIG_DEPART;
-            if (DEBUG == true) {
-                Serial.println("\navant depart");
-            }
-        } else {
-            if (altActuel < 1200) {
-                if (altActuel > altPrecedent) {
-                    if (DEBUG == true) {
-                        Serial.println("\nmonter");
-                    }
-                    // envoie toutes les 5 minutes
-                    ticks = TIME_SIG_DEBUT;
-                } else {
-                    if (DEBUG == true) {
-                        Serial.println("\ndescente");
-                    }
-                    // envoie toutes les 3 minutes
-                    ticks = TIME_SIG_FIN;
-                }
-                // sinon toutes les 10 minutes
-            } else {
-                Serial.println("\nvol");
-                ticks = TIME_SIG_VOL;
-            }
-        }
-        vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(ticks));
-
+        vTaskDelay(100);
     }
 }
 
@@ -139,33 +78,22 @@ void Taches::tacheCarteSd(void* parameter) {
 
     CarteSD.begin();
 
+    // crétion du fichier
+    CarteSD.initFile("/ballon.csv", "datetime;altitude;longitude;latitude;radiation;temperature;pression;humidite\n");
     if (DEBUG == true) {
-        // vérification si le fichier csv est déjà pésent
-        // crétion du fichier si n'est pas présent
-        if (SD.exists("/ballon.csv")) {
-            Serial.println("fichier existe");
-        } else {
-            CarteSD.initFile("/ballon.csv", "datetime;altitude;longitude;latitude;radiation;pression;temperature;humidite\n");
-            Serial.println("fichier cree");
-        }
-    } else {
-        // vérification si le fichier csv n'est pas déjà pésent
-        // crétion du fichier
-        if (!SD.exists("/ballon.csv")) {
-            CarteSD.initFile("/ballon.csv", "datetime;altitude;longitude;latitude;radiation;pression;temperature;humidite\n");
-        }
+        Serial.println("fichier cree");
     }
-
 
     while (true) {
         if (DEBUG == true) {
             Serial.print("TacheCarteSD\n");
         }
         xSemaphoreTake(mutex, portMAX_DELAY);
-        // ajout de la chaine de caractere contenant les données, au fichier csv
-        CarteSD.ajouterChaine("/ballon.csv", CarteSD.creerChaine(lesDonnees));
+        if (lesDonnees->latitude != 40) {
+            // ajout de la chaine de caractere contenant les données, au fichier csv
+            CarteSD.ajouterChaine("/ballon.csv", CarteSD.creerChaine(lesDonnees));  
+        }
         xSemaphoreGive(mutex);
-
         vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(TIME_CARTESD));
     }
 }
@@ -367,10 +295,10 @@ void Taches::tacheGPS(void* parameter) {
                 Serial.print("TacheGPS\nalt: ");
                 Serial.print(alt);
                 Serial.print("\t\tlon: ");
-                Serial.print(lon);
+                Serial.print(lon, 6);
                 Serial.print("\t\tlat: ");
-                Serial.print(lat);
-                Serial.printf("\ndate: %d:%d:%d %d/%d/%d\n\n", heure, minute, seconde, jour, mois, annee);
+                Serial.print(lat, 6);
+                Serial.printf("\ndate: %02d:%02d:%02d %02d/%02d/%d\n\n", heure, minute, seconde, jour, mois, annee);
             }
 
             // applique les valeur a la structure si le GPS est sync

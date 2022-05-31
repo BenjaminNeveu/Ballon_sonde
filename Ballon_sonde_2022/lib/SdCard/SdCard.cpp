@@ -39,6 +39,7 @@ bool SdCard::begin() {
 
 void SdCard::initFile(const char* path, const char* message) {
     File file = SDFileSystem.open(path, FILE_WRITE);
+    
     if (!file) {
         if (debug == true) {
             Serial.print("Erreur ecriture du fichier / ");
@@ -97,11 +98,11 @@ String SdCard::creerChaine(typeDonnees* lesDonnees) {
     chaine += formatDateHeure(lesDonnees->minute) + ":";
     chaine += formatDateHeure(lesDonnees->seconde) + ";";
     chaine += String(lesDonnees->altitude, 2) + ";";
-    chaine += String(lesDonnees->latitude, 8) + ";";
     chaine += String(lesDonnees->longitude, 8) + ";";
+    chaine += String(lesDonnees->latitude, 8) + ";";
     chaine += String(lesDonnees->cpm, 2) + ";";
-    chaine += String(lesDonnees->pression, 2) + ";";
     chaine += String(lesDonnees->temperature, 2) + ";";
+    chaine += String(lesDonnees->pression, 2) + ";";
     chaine += String(lesDonnees->humidite, 2);
 
     return chaine;

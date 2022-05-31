@@ -105,7 +105,6 @@ void setup() {
             &lesDonnees, 
             2, 
             NULL);
-
 }
 
 void loop() {  
