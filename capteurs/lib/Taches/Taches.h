@@ -1,21 +1,22 @@
-/* 
- * File:   Taches.h
- * Author: cmaillard
- * 
- * Created on 30 mars 2022, 10:19
+/**
+ @file   Taches.h
+ @brief Déclaration de la classe Taches
+ @version 1.0
+ @author cmaillard
+ @date 30/03/2022
  */
 
 #ifndef TACHES_H
 #define TACHES_H
 
-#include <Arduino.h>
-#include <BME280.h> 
+#include <Arduino.h>            // framework arduino
+#include <BME280.h>             // fonctionnement du bme
 #include <BME280I2C.h>          // Capteur Pression humidité température
-#include <TinyGPS.h>
-#include <HardwareSerial.h>
-#include <Wire.h>
-#include <RadiationWatch.h>
-#include <Structure.h>
+#include <TinyGPS.h>            //capteur gps et date
+#include <HardwareSerial.h>     // liaison serie
+#include <Wire.h>               // bornes de la carte 
+#include <RadiationWatch.h>     // capteur radiation
+#include <Structure.h>          // struture pour la sauvegarde des données
 
  
 
@@ -27,10 +28,10 @@ public:
 
 
 
-    static void TacheBME(void *Parameters);
-    static void TacheRadiation(void *Parameters);
-    static void TacheGPS(void *Parameters);
-    static void TacheAfficher(void* Parameters);
+    static void TacheBME(void *parameters);
+    static void TacheRadiation(void *parameters);
+    static void TacheGPS(void *parameters);
+    static void TacheAfficher(void* parameters);
 
 private:
 

@@ -1,8 +1,19 @@
-/* 
- * File:   Taches.cpp
- * Author: cmaillard
- * 
- * Created on 30 mars 2022, 10:19
+/**
+    @file   Taches.cpp
+    @brief implémentation de la classe Taches
+    @version 1.0
+    @author cmaillard
+    @date 30/03/2022
+    @details
+    Bibliothèque : TinyGPS 
+     installation : pio lib -g install 416
+  
+    Bibliothèque : BME280 @ 3.0.0
+    installation : pio lib -g install 901
+  
+    Bibliothèque : RadiationWatch @ 0.6.4 
+    installation : pio lib -g install 1523
+  
  */
 
 #include "Taches.h"
@@ -38,6 +49,13 @@ void onNoise() {
     Serial.println("Argh, bruit, SVP arreter de bouger");
 }
  */
+
+/**
+    @brief Taches::TacheBME
+    @detials tache pour la recuperation des données du bme280
+    @param Parameters pour la declaration de la structure de données dans la tache
+    @author cmaillard
+*/
 void Taches::TacheBME(void *Parameters) {
 
     BME280I2C::Settings setBme(
@@ -73,7 +91,7 @@ void Taches::TacheBME(void *Parameters) {
 
         xSemaphoreTake(mutex, portMAX_DELAY);
 
-       
+
         donneesBme->humidite = hum;
         donneesBme->pression = pres;
         donneesBme->temperature = temp;
@@ -84,6 +102,12 @@ void Taches::TacheBME(void *Parameters) {
     }
 }
 
+/**
+    @brief Taches::TacheRadiation
+    @detials tache pour la recuperation des données du geiger de poche
+    @param Parameters pour la declaration de la structure de données dans la tache
+    @author cmaillard
+*/
 void Taches::TacheRadiation(void *Parameters) {
 
     TickType_t xLastWakeTime;
@@ -110,6 +134,13 @@ void Taches::TacheRadiation(void *Parameters) {
 
 }
 
+
+/**
+    @brief Taches::TacheRadiation
+    @detials tache pour la recuperation des données du GPS
+    @param Parameters pour la declaration de la structure de données dans la tache
+    @author cmaillard
+*/
 void Taches::TacheGPS(void* Parameters) {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
@@ -166,6 +197,13 @@ void Taches::TacheGPS(void* Parameters) {
     }
 }
 
+
+/**
+    @brief Taches::TacheAfficher
+    @detials tache pour l'affichage des données des capteurs
+    @param Parameters pour la declaration de la structure de données dans la tache
+    @author cmaillard
+*/
 void Taches::TacheAfficher(void* Parameters) {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
@@ -188,7 +226,7 @@ void Taches::TacheAfficher(void* Parameters) {
         Serial.print("\t\t pression :");
         Serial.println(lesDonnees->pression);
 
-        /*
+
         Serial.print("altitude : ");
         Serial.print(lesDonnees->altitude);
         Serial.print("\t\t longitude :");
@@ -212,7 +250,7 @@ void Taches::TacheAfficher(void* Parameters) {
 
         Serial.print("CPM :");
         Serial.print(lesDonnees->cpm);
-         */
+
 
 
         //fermeture du mutex

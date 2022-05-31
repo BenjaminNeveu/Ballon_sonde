@@ -1,14 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   Structure.h
- * Author: cmaillard
- *
- * Created on 31 mars 2022, 14:51
+/**
+    @file   Structure.h
+    @brief Déclaration de la classe structure
+    @version 1.0
+    @author cmaillard
+    @date 30/03/2022
  */
 
 #ifndef STRUCTURE_H
