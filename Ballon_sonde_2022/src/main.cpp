@@ -35,6 +35,8 @@ void setup() {
     Serial.begin(115200);
     Serial.println("Setup done");
     Wire.begin(21, 22);
+    
+    delay(1000);
 
     lesDonnees.annee = 0;
     lesDonnees.mois = 0;

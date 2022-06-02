@@ -62,7 +62,7 @@ void Taches::tacheSigfox(void* parameter) {
         if ((lesDonnees->seconde == 37) && (lesDonnees->minute % 2 == 0)) {
             Sig->coderTrame(lesDonnees);
             Sig->envoyer();
-            delay(1000); 
+            delay(1000);
         }
         // fermeture du mutex
         xSemaphoreGive(mutex);
@@ -76,13 +76,19 @@ void Taches::tacheCarteSd(void* parameter) {
     xLastWakeTime = xTaskGetTickCount();
     typeDonnees *lesDonnees = (typeDonnees *) parameter;
 
-    CarteSD.begin();
+    while (!CarteSD.begin()) {
+        if (DEBUG == true) {
+            Serial.println("erreur CarteSD");
+        }
+        delay(10000);
+    }
 
     // crétion du fichier
     CarteSD.initFile("/ballon.csv", "datetime;altitude;longitude;latitude;radiation;temperature;pression;humidite\n");
     if (DEBUG == true) {
         Serial.println("fichier cree");
     }
+
 
     while (true) {
         if (DEBUG == true) {
@@ -115,6 +121,8 @@ void Taches::tacheBME280(void* parameter) {
     TickType_t xLastWakeTime;
     xLastWakeTime = xTaskGetTickCount();
     typeDonnees *lesDonnees = (typeDonnees *) parameter;
+
+    delay(1000);
 
     while (!bme.begin()) {
         if (DEBUG == true) {
@@ -150,6 +158,8 @@ void Taches::tacheBME280(void* parameter) {
         lesDonnees->pression = pres;
         // fermeture du mutex
         xSemaphoreGive(mutex);
+
+        delay(1000);
 
         vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(TIME_BME));
     }
