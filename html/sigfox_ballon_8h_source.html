@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Ballon Sonde:  Fichier source de /home/USERS/ELEVES/SNIR2020/bneveu/Bureau/Programme/Ballon_Sonde/lib/sigfoxBallon/sigfoxBallon.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Ballon Sonde
+   &#160;<span id="projectnumber">1.0</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.13 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('sigfox_ballon_8h_source.html','');});
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">sigfoxBallon.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="sigfox_ballon_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div><div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#ifndef TRAMEBALLON_H</span></div><div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#define TRAMEBALLON_H</span></div><div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div><div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;sigfox.h&gt;</span></div><div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="structures_8h.html">structures.h</a>&quot;</span></div><div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div><div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="class_sigfox_ballon.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_sigfox_ballon.html">SigfoxBallon</a> : <span class="keyword">public</span> Sigfox {</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div><div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="class_sigfox_ballon.html#a4b09f1eb542811efd9b92f8223cc4ddf">SigfoxBallon</a>(uint8_t rxPin = 26, uint8_t txPin = 27, <span class="keywordtype">bool</span> debugEn = <span class="keyword">true</span>);</div><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_sigfox_ballon.html#adac3c75a8f78565a416d096a9d6ac960">coderTrame</a>(<a class="code" href="structtype_donnees.html">typeDonnees</a> *<a class="code" href="main_8cpp.html#af3eae1d069dd2d2cdbd260b8f5792f25">lesDonnees</a>);</div><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">private</span>:   </div><div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="class_sigfox_ballon.html#a50ef8ec6d0a04fa1908c52797450d778">arrondi</a>(<span class="keywordtype">double</span> val);</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_sigfox_ballon.html#a50ef8ec6d0a04fa1908c52797450d778">arrondi</a>(<span class="keywordtype">float</span> val);</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">double</span> <a class="code" href="class_sigfox_ballon.html#ab8ef7628b33fddda66dd7e3e5c10138b">verifValeur</a>(<span class="keywordtype">double</span> val, <span class="keywordtype">double</span> valMin, <span class="keywordtype">double</span> valMax);</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">float</span> <a class="code" href="class_sigfox_ballon.html#ab8ef7628b33fddda66dd7e3e5c10138b">verifValeur</a>(<span class="keywordtype">float</span> val, <span class="keywordtype">float</span> valMin, <span class="keywordtype">float</span> valMax);</div><div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_sigfox_ballon.html#a6b8637c12cce94c8faac4130177198f6">bitSigne</a>(<span class="keywordtype">float</span> val);</div><div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_sigfox_ballon.html#a6b8637c12cce94c8faac4130177198f6">bitSigne</a>(<span class="keywordtype">double</span> val);</div><div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;};</div><div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* TRAMEBALLON_H */</span><span class="preprocessor"></span></div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;</div><div class="ttc" id="class_sigfox_ballon_html_adac3c75a8f78565a416d096a9d6ac960"><div class="ttname"><a href="class_sigfox_ballon.html#adac3c75a8f78565a416d096a9d6ac960">SigfoxBallon::coderTrame</a></div><div class="ttdeci">void coderTrame(typeDonnees *lesDonnees)</div><div class="ttdoc">SigfoxBallon::coderTrame. </div><div class="ttdef"><b>Definition:</b> sigfoxBallon.cpp:28</div></div>
+<div class="ttc" id="structures_8h_html"><div class="ttname"><a href="structures_8h.html">structures.h</a></div></div>
+<div class="ttc" id="class_sigfox_ballon_html"><div class="ttname"><a href="class_sigfox_ballon.html">SigfoxBallon</a></div><div class="ttdef"><b>Definition:</b> sigfoxBallon.h:16</div></div>
+<div class="ttc" id="class_sigfox_ballon_html_a6b8637c12cce94c8faac4130177198f6"><div class="ttname"><a href="class_sigfox_ballon.html#a6b8637c12cce94c8faac4130177198f6">SigfoxBallon::bitSigne</a></div><div class="ttdeci">int bitSigne(float val)</div><div class="ttdoc">SigfoxBallon::bitSigne. </div><div class="ttdef"><b>Definition:</b> sigfoxBallon.cpp:265</div></div>
+<div class="ttc" id="class_sigfox_ballon_html_a4b09f1eb542811efd9b92f8223cc4ddf"><div class="ttname"><a href="class_sigfox_ballon.html#a4b09f1eb542811efd9b92f8223cc4ddf">SigfoxBallon::SigfoxBallon</a></div><div class="ttdeci">SigfoxBallon(uint8_t rxPin=26, uint8_t txPin=27, bool debugEn=true)</div><div class="ttdoc">SigfoxBallon::SigfoxBallon. </div><div class="ttdef"><b>Definition:</b> sigfoxBallon.cpp:19</div></div>
+<div class="ttc" id="main_8cpp_html_af3eae1d069dd2d2cdbd260b8f5792f25"><div class="ttname"><a href="main_8cpp.html#af3eae1d069dd2d2cdbd260b8f5792f25">lesDonnees</a></div><div class="ttdeci">typeDonnees lesDonnees</div><div class="ttdef"><b>Definition:</b> main.cpp:32</div></div>
+<div class="ttc" id="class_sigfox_ballon_html_ab8ef7628b33fddda66dd7e3e5c10138b"><div class="ttname"><a href="class_sigfox_ballon.html#ab8ef7628b33fddda66dd7e3e5c10138b">SigfoxBallon::verifValeur</a></div><div class="ttdeci">double verifValeur(double val, double valMin, double valMax)</div><div class="ttdoc">SigfoxBallon::verifValeur. </div><div class="ttdef"><b>Definition:</b> sigfoxBallon.cpp:246</div></div>
+<div class="ttc" id="structtype_donnees_html"><div class="ttname"><a href="structtype_donnees.html">typeDonnees</a></div><div class="ttdef"><b>Definition:</b> structures.h:14</div></div>
+<div class="ttc" id="class_sigfox_ballon_html_a50ef8ec6d0a04fa1908c52797450d778"><div class="ttname"><a href="class_sigfox_ballon.html#a50ef8ec6d0a04fa1908c52797450d778">SigfoxBallon::arrondi</a></div><div class="ttdeci">double arrondi(double val)</div><div class="ttdoc">SigfoxBallon::arrondi. </div><div class="ttdef"><b>Definition:</b> sigfoxBallon.cpp:201</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_fb9a1d4ef4fa1f3aecbbba98d2d0ba8a.html">Ballon_Sonde</a></li><li class="navelem"><a class="el" href="dir_31a2066fa0aa8fd1d56ab947d327463e.html">lib</a></li><li class="navelem"><a class="el" href="dir_6d6fc8e558b051ac7b32b186da235a2f.html">sigfoxBallon</a></li><li class="navelem"><a class="el" href="sigfox_ballon_8h.html">sigfoxBallon.h</a></li>
+    <li class="footer">Généré par
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.13 </li>
+  </ul>
+</div>
+</body>
+</html>
