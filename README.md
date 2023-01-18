@@ -24,8 +24,8 @@ Bibliothèque à installer :
 ***Sommaire***
  1. [Présentation du projet](https://github.com/BenjaminNeveu/Ballon_sonde#présentation-du-projet)
  2. [Synoptique](https://github.com/BenjaminNeveu/Ballon_sonde#synoptique)
-    - Synoptique global
-    - Synoptique du ballon
+    - [Synoptique global](https://github.com/BenjaminNeveu/Ballon_sonde#synoptique-global)
+    - [Synoptique ballon](https://github.com/BenjaminNeveu/Ballon_sonde#synoptique-ballon)
  3. [Cas d'utilisation](https://github.com/BenjaminNeveu/Ballon_sonde#cas-dutilisation)
     - [Émettre trame SigFox](https://github.com/BenjaminNeveu/Ballon_sonde#%C3%A9mettre-trame-sigfox)
       - [Présentation de Sigfox](https://github.com/BenjaminNeveu/Ballon_sonde#pr%C3%A9sentation-de-sigfox)
@@ -66,7 +66,6 @@ Ainsi, la récupération des données c'est réalisée à l’aide de capteurs p
 <img src="/img/img_Ballon.png" title="Ballon Stratosphérique" style="height : 200px">
 </td>
 </table>
-
 <table>
 <td><img src="/img/F4KMN.png" title="Logo F4KMN" style="height : 200px; width : 780px"></td>
 <td>
@@ -74,7 +73,6 @@ Ces informations ont été traitées et mis sur un site web pour avoir un suivi 
 <br><br>L'année précédente la technologie SigFox avait été utilisée avec succès pour la transmission des données en provenance de la nacelle. C'est donc pour cela que nous avons réutilisé cette technologie.<br><br>Cependant le lycée souhaita également associer l’opérateur SigFox avec le système de communication APRS (Système automatique de notification des paquets) afin de remédier à tout problème de communication. On souhaitait pouvoir visualiser la position du ballon par rapport au véhicule, pour permettre la récupération de la nacelle, ceci se fera à l’aide de l'APRS, une technologie radio amateur, de plus le lycée Touchard Washington aux Mans possède son propre radio club, son indicatif est F4KMN et appartient au REF (Réseau des Émetteurs Français).
 </td>
 </table>
-
 <table>
 	<td>
 D’autre part, pour réaliser l’envoi du ballon, des autorisations sont nécessaires. Le projet de lancé un ballon-sonde en haute atmosphère a donc put être réalisable grâce aux partenariat avec Planète Science, association partenaire du CNES (Centre National d’Études Spatiales).
