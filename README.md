@@ -22,8 +22,8 @@ Bibliothèque à installer :
 <hr>
 
 ***Sommaire***
- 1. [Présentation du projet](https://github.com/BenjaminNeveu/Ballon_sonde#pr%C3%A9sentation_du_projet)
- 2. [Synoptique](https://github.com/BenjaminNeveu/Ballon_sonde#synoptique)
+ 1. [Présentation du projet](./Ballon_sonde#présentation_du_projet)
+ 2. [Synoptique](./Ballon_sonde#synoptique)
  3. [Cas d'utilisation](https://github.com/BenjaminNeveu/Ballon_sonde#cas_dutilisation)
     - [Émettre trame SigFox]()
       - [Présentation de Sigfox]()
@@ -61,7 +61,7 @@ Ainsi, la récupération des données c'est réalisée à l’aide de capteurs p
  - la position (en degrés décimaux)<br>
  - l’altitude du ballon (m)</td>
 <td>
-<img src="/img/img_ballon.png" title="Ballon Stratosphérique">
+<img src="/img/img_Ballon.png" title="Ballon Stratosphérique">
 </td>
 </table>
 
