@@ -1,7 +1,6 @@
 ﻿# Ballon Sonde 2022 - BTS SNIR - Lycée Touchard Washington - Le Mans
 **Important**
 
-Ce Github concerne que la partie ballon <br>
 Le programme a été compilé sur un ESP32 TTGO-TI v1.3 <br>
 Le projet a été réalisé sur l'IDE Netbeans avec PlatformIO d'installé (**Utilisation de l'outils SPIFFS**)
 
