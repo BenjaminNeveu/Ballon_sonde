@@ -1,8 +1,8 @@
 ﻿# Ballon Sonde 2022 - BTS SNIR - Lycée Touchard Washington - Le Mans
 **Important**
 
-Ce Github concerne que la partie ballon
-Le programme a été compilé sur un ESP32 TTGO-TI v1.3
+Ce Github concerne que la partie ballon <br>
+Le programme a été compilé sur un ESP32 TTGO-TI v1.3 <br>
 Le projet a été réalisé sur l'IDE Netbeans avec PlatformIO d'installé (**Utilisation de l'outils SPIFFS**)
 
 <hr>
@@ -22,27 +22,29 @@ Bibliothèque à installer :
 <hr>
 
 ***Sommaire***
- 1. [Présentation du projet](./Ballon_sonde#présentation_du_projet)
- 2. [Synoptique](./Ballon_sonde#synoptique)
- 3. [Cas d'utilisation](https://github.com/BenjaminNeveu/Ballon_sonde#cas_dutilisation)
-    - [Émettre trame SigFox]()
-      - [Présentation de Sigfox]()
-      - [Format de la trame employé]()
-        - [Altitude]() 
-        - [Coordonnées]()
-        - [Pression]()
-        - [Humidité]()
-        - [Température]()
-        - [Radiation]()
-      - [Diagramme de classe]() 
-    - [Sauvegarder mesures et positions]()
-      - [Classe utilisé]() 
-    - [Afficher page web admin]()
-      - [Interface]() 
-4. [Amélioration a apporter]()
-    - [Sauvegarder mesures et position]()
-    - [Émettre trame SigFox]()
-5. [Informations Complémentaires]()
+ 1. [Présentation du projet](https://github.com/BenjaminNeveu/Ballon_sonde#présentation-du-projet)
+ 2. [Synoptique](https://github.com/BenjaminNeveu/Ballon_sonde#synoptique)
+    - Synoptique global
+    - Synoptique du ballon
+ 3. [Cas d'utilisation](https://github.com/BenjaminNeveu/Ballon_sonde#cas-dutilisation)
+    - [Émettre trame SigFox](https://github.com/BenjaminNeveu/Ballon_sonde#%C3%A9mettre-trame-sigfox)
+      - [Présentation de Sigfox](https://github.com/BenjaminNeveu/Ballon_sonde#pr%C3%A9sentation-de-sigfox)
+      - [Format de la trame employé](https://github.com/BenjaminNeveu/Ballon_sonde#format-de-la-trame-employ%C3%A9)
+        - [Altitude](https://github.com/BenjaminNeveu/Ballon_sonde#altitude)
+        - [Coordonnées](https://github.com/BenjaminNeveu/Ballon_sonde#coordonn%C3%A9es)
+        - [Pression](https://github.com/BenjaminNeveu/Ballon_sonde#pression)
+        - [Humidité](https://github.com/BenjaminNeveu/Ballon_sonde#humidit%C3%A9)
+        - [Température](https://github.com/BenjaminNeveu/Ballon_sonde#temp%C3%A9rature)
+        - [Radiation](https://github.com/BenjaminNeveu/Ballon_sonde#radiation)
+      - [Diagramme de classe](https://github.com/BenjaminNeveu/Ballon_sonde#diagramme-de-classe)
+    - [Sauvegarder mesures et positions](https://github.com/BenjaminNeveu/Ballon_sonde#sauvegarder-mesures-et-positions)
+      - [Classe utilisé](https://github.com/BenjaminNeveu/Ballon_sonde#classe-utilis%C3%A9)
+    - [Afficher page web admin](https://github.com/BenjaminNeveu/Ballon_sonde#afficher-page-web-admin)
+      - [Interface](https://github.com/BenjaminNeveu/Ballon_sonde#interface)
+4. [Amélioration a apporter](https://github.com/BenjaminNeveu/Ballon_sonde#am%C3%A9lioration-a-apporter)
+    - [Sauvegarder mesures et positions](https://github.com/BenjaminNeveu/Ballon_sonde#sauvegarder-mesures-et-positions-1)
+    - [Émettre trame SigFox](https://github.com/BenjaminNeveu/Ballon_sonde#%C3%A9mettre-trame-sigfox-1)
+5. [Informations Complémentaires](https://github.com/BenjaminNeveu/Ballon_sonde#informations-compl%C3%A9mentaires)
 
 ## Présentation du projet
 
@@ -61,12 +63,12 @@ Ainsi, la récupération des données c'est réalisée à l’aide de capteurs p
  - la position (en degrés décimaux)<br>
  - l’altitude du ballon (m)</td>
 <td>
-<img src="/img/img_Ballon.png" title="Ballon Stratosphérique">
+<img src="/img/img_Ballon.png" title="Ballon Stratosphérique" style="height : 200px">
 </td>
 </table>
 
 <table>
-<td><img src="/img/F4KMN.png" title="Logo F4KMN"></td>
+<td><img src="/img/F4KMN.png" title="Logo F4KMN" style="height : 200px"></td>
 <td>
 Ces informations ont été traitées et mis sur un site web pour avoir un suivi durant et après le voyage du ballon.
 <br><br>L'année précédente la technologie SigFox avait été utilisée avec succès pour la transmission des données en provenance de la nacelle. C'est donc pour cela que nous avons réutilisé cette technologie.<br><br>Cependant le lycée souhaita également associer l’opérateur SigFox avec le système de communication APRS (Système automatique de notification des paquets) afin de remédier à tout problème de communication. On souhaitait pouvoir visualiser la position du ballon par rapport au véhicule, pour permettre la récupération de la nacelle, ceci se fera à l’aide de l'APRS, une technologie radio amateur, de plus le lycée Touchard Washington aux Mans possède son propre radio club, son indicatif est F4KMN et appartient au REF (Réseau des Émetteurs Français).
@@ -87,8 +89,14 @@ Il met à la disposition des établissements scolaires (lycée, collèges, prima
 <table>
 
 ## Synoptique
-
+	
+>### Synoptique Global
+	
 <img src="/img/Synoptique_global.png" title="Synoptique Global">
+	
+<hr>
+	
+>### Synoptique ballon
 
 <img src="/img/Synoptique_ballon.png" title="Synoptique du Ballon">
 
@@ -289,7 +297,7 @@ server.on("/recupererDonnee", HTTP_GET, [lesDonnees](AsyncWebServerRequest * req
 
 ## Amélioration a apporter
 
->### Sauvegarder mesures et position
+>### Sauvegarder mesures et positions
 
 Une amélioration serait a apporter avec la gestion de la date pour la création de fichier pour éviter tout problèmes de suppression de fichier sur la carte SD lors d'un redémarrage imprévue de l'ESP32.
 
