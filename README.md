@@ -68,7 +68,7 @@ Ainsi, la récupération des données c'est réalisée à l’aide de capteurs p
 </table>
 
 <table>
-<td><img src="/img/F4KMN.png" title="Logo F4KMN" style="height : 200px"></td>
+<td><img src="/img/F4KMN.png" title="Logo F4KMN" style="height : 200px; width : 780px"></td>
 <td>
 Ces informations ont été traitées et mis sur un site web pour avoir un suivi durant et après le voyage du ballon.
 <br><br>L'année précédente la technologie SigFox avait été utilisée avec succès pour la transmission des données en provenance de la nacelle. C'est donc pour cela que nous avons réutilisé cette technologie.<br><br>Cependant le lycée souhaita également associer l’opérateur SigFox avec le système de communication APRS (Système automatique de notification des paquets) afin de remédier à tout problème de communication. On souhaitait pouvoir visualiser la position du ballon par rapport au véhicule, pour permettre la récupération de la nacelle, ceci se fera à l’aide de l'APRS, une technologie radio amateur, de plus le lycée Touchard Washington aux Mans possède son propre radio club, son indicatif est F4KMN et appartient au REF (Réseau des Émetteurs Français).
@@ -291,7 +291,7 @@ server.on("/recupererDonnee", HTTP_GET, [lesDonnees](AsyncWebServerRequest * req
 ```
 >### Interface
 
-<img src="/img/interface%20web%20admin.png" title="interface Page Web Admin">
+<img src="/img/interface%20web%20admin.png" title="interface Page Web Admin" style="height: 600px; border: solid #5c5c5c 1px;">
 
 <hr>
 
