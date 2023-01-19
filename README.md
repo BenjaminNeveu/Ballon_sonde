@@ -23,8 +23,8 @@ Bibliothèque à installer :
 ***Sommaire***
  1. [Présentation du projet](https://github.com/BenjaminNeveu/Ballon_sonde#présentation-du-projet)
  2. [Synoptique](https://github.com/BenjaminNeveu/Ballon_sonde#synoptique)
-    - [Synoptique global](https://github.com/BenjaminNeveu/Ballon_sonde#synoptique-global)
-    - [Synoptique ballon](https://github.com/BenjaminNeveu/Ballon_sonde#synoptique-ballon)
+    - [Synoptique Global](https://github.com/BenjaminNeveu/Ballon_sonde#synoptique-global)
+    - [Synoptique Ballon](https://github.com/BenjaminNeveu/Ballon_sonde#synoptique-ballon)
  3. [Cas d'utilisation](https://github.com/BenjaminNeveu/Ballon_sonde#cas-dutilisation)
     - [Émettre trame SigFox](https://github.com/BenjaminNeveu/Ballon_sonde#%C3%A9mettre-trame-sigfox)
       - [Présentation de Sigfox](https://github.com/BenjaminNeveu/Ballon_sonde#pr%C3%A9sentation-de-sigfox)
@@ -93,7 +93,7 @@ Il met à la disposition des établissements scolaires (lycée, collèges, prima
 	
 <hr>
 	
->### Synoptique ballon
+>### Synoptique Ballon
 
 <img src="/img/Synoptique_ballon.png" title="Synoptique du Ballon">
 
@@ -198,7 +198,7 @@ datetime ; altitude ; longitude ; latitude ; radiation ; temperature ; pression 
 
 Pour l'enregistrement toutes les données de la structure de données on été converti sous forme de chaine de caractère, pour l'écriture dans le fichier.
 
-#### Classe Utilisé
+>#### Classe Utilisé
 
 La tache « Sauvegarder mesure et position » a besoin de trois bibliothèques pour fonctionner « SPI », « SD », et « FS » . Les méthodes « begin » des classes « SPI » et « SD » permettent d’initialiser la liaison, la classe « FS » permet d’ouvrir le fichier avec la méthode « open », d’écrire avec « println » et de le fermer avec « close ».
 
