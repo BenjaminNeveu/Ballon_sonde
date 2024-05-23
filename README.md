@@ -305,7 +305,7 @@ Pour cette tâche, il faudrait retirer un bit a une variable pour l'attribuer a 
 
 ## Informations Complémentaires
 
-[Philippe SIMIER](https://github.com/PhilippeSimier) 
+  -  [Philippe SIMIER](https://github.com/PhilippeSimier) 
   -  [Installation de PlatformIO sur l'IDE Netbeans ](https://github.com/PhilippeSimier/Esp32/tree/master/00_install_EDI)
   -  [Ballon stratosphérique APRS](https://github.com/PhilippeSimier/Ballon_stratospherique_aprs_2022)
 
